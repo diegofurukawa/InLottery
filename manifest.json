@@ -1,0 +1,29 @@
+{
+  "manifest_version": 3,
+  "name": "InLottery",
+  "description": "Smart lottery ticket filler for Caixa Loterias Online. Automatically fill your lottery games with ease.",
+  "version": "3.0.1",
+  "icons": {
+    "48": "icon48.png",
+    "128": "icon128.png"
+  },
+  "action": {
+    "default_title": "InLottery",
+    "default_popup": "popup.html",
+    "default_icon": {
+      "48": "icon48.png",
+      "128": "icon128.png"
+    }
+  },
+  "permissions": [
+    "scripting",
+    "tabs",
+    "activeTab"
+  ],
+  "background": {
+    "service_worker": "dist/background.bundle.js"
+  },
+  "host_permissions": [
+    "https://loteriasonline.caixa.gov.br/*"
+  ]
+}

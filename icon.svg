@@ -1,0 +1,64 @@
+<svg width="128" height="128" viewBox="0 0 128 128" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background gradient -->
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#4CAF50;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#2E7D32;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="ticket" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#FFFFFF;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#F5F5F5;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+
+  <!-- Background circle -->
+  <circle cx="64" cy="64" r="60" fill="url(#bg)"/>
+
+  <!-- Lottery ticket shape -->
+  <rect x="30" y="35" width="68" height="58" rx="4" fill="url(#ticket)" stroke="#2E7D32" stroke-width="2"/>
+
+  <!-- Ticket perforation top -->
+  <circle cx="30" cy="50" r="3" fill="#4CAF50"/>
+  <circle cx="98" cy="50" r="3" fill="#4CAF50"/>
+
+  <!-- Ticket perforation bottom -->
+  <circle cx="30" cy="78" r="3" fill="#4CAF50"/>
+  <circle cx="98" cy="78" r="3" fill="#4CAF50"/>
+
+  <!-- Lucky numbers grid (3x2) -->
+  <g fill="#2E7D32" font-family="Arial, sans-serif" font-weight="bold" font-size="14">
+    <!-- Row 1 -->
+    <circle cx="45" cy="55" r="8" fill="#4CAF50"/>
+    <text x="45" y="59" text-anchor="middle" fill="white">7</text>
+
+    <circle cx="64" cy="55" r="8" fill="#4CAF50"/>
+    <text x="64" y="59" text-anchor="middle" fill="white">13</text>
+
+    <circle cx="83" cy="55" r="8" fill="#4CAF50"/>
+    <text x="83" y="59" text-anchor="middle" fill="white">21</text>
+
+    <!-- Row 2 -->
+    <circle cx="45" cy="73" r="8" fill="#FF9800"/>
+    <text x="45" y="77" text-anchor="middle" fill="white">42</text>
+
+    <circle cx="64" cy="73" r="8" fill="#FF9800"/>
+    <text x="64" y="77" text-anchor="middle" fill="white">56</text>
+
+    <circle cx="83" cy="73" r="8" fill="#FF9800"/>
+    <text x="83" y="77" text-anchor="middle" fill="white">89</text>
+  </g>
+
+  <!-- Sparkle effect -->
+  <g fill="#FFEB3B" opacity="0.8">
+    <circle cx="100" cy="40" r="2"/>
+    <circle cx="105" cy="35" r="1.5"/>
+    <circle cx="28" cy="25" r="2"/>
+    <circle cx="95" cy="95" r="2"/>
+  </g>
+
+  <!-- Plus icon (indicating "add/fill") -->
+  <g fill="#FFFFFF" opacity="0.9">
+    <rect x="106" y="96" width="16" height="3" rx="1.5"/>
+    <rect x="112" y="90" width="3" height="16" rx="1.5"/>
+  </g>
+</svg>
