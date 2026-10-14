@@ -8,6 +8,8 @@ const { DELAYS, ERROR_MESSAGES, SUCCESS_MESSAGES } = require('../constants.js');
 const { RetryHandler } = require('../utils/retry-handler.js');
 const { UIController } = require('./ui-controller.js');
 
+const DRAFT_STORAGE_KEY = 'inlottery.formDraft.v1';
+
 /**
  * Classe principal da extensão
  */
@@ -15,6 +17,7 @@ class LotteryExtension {
   constructor() {
     this.ui = new UIController();
     this.retryHandler = new RetryHandler(DELAYS.MAX_RETRIES, DELAYS.RETRY_DELAY);
+    this.restoreDraft();
     this.setupEventListeners();
   }
 
@@ -31,6 +34,66 @@ class LotteryExtension {
     this.ui.elements.button.addEventListener('click', () => {
       this.processGames();
     });
+
+    // Salva cada alteração para proteger os jogos quando o popup perde o foco.
+    const draftFields = [
+      this.ui.elements.modalidade,
+      this.ui.elements.quantidade,
+      this.ui.elements.qtdTeimosinha,
+      this.ui.elements.espelho,
+      this.ui.elements.listadejogos
+    ];
+
+    draftFields.forEach(element => {
+      element.addEventListener(element === this.ui.elements.listadejogos ? 'input' : 'change', () => {
+        this.saveDraft();
+      });
+    });
+
+    this.ui.elements.closeButton.addEventListener('click', () => {
+      this.closePopup();
+    });
+
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape') {
+        event.preventDefault();
+        this.closePopup();
+      }
+    });
+  }
+
+  /**
+   * Persiste o formulário de forma síncrona antes que o popup possa fechar.
+   */
+  saveDraft() {
+    try {
+      localStorage.setItem(DRAFT_STORAGE_KEY, JSON.stringify(this.ui.getFormData()));
+    } catch (error) {
+      console.error('Erro ao salvar rascunho:', error);
+    }
+  }
+
+  /**
+   * Restaura o último formulário salvo.
+   */
+  restoreDraft() {
+    try {
+      const savedDraft = localStorage.getItem(DRAFT_STORAGE_KEY);
+      if (savedDraft) {
+        this.ui.setFormData(JSON.parse(savedDraft));
+      }
+    } catch (error) {
+      console.error('Erro ao restaurar rascunho:', error);
+      localStorage.removeItem(DRAFT_STORAGE_KEY);
+    }
+  }
+
+  /**
+   * Salva o estado atual e fecha o popup explicitamente.
+   */
+  closePopup() {
+    this.saveDraft();
+    window.close();
   }
 
   /**

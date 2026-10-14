@@ -27,10 +27,36 @@
         border-radius: 12px;
         padding: 16px;
         box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
-        max-height: calc(100% - 32px);
+        height: 100%;
         overflow: hidden;
         display: flex;
         flex-direction: column;
+      }
+
+      .form-content {
+        flex: 1 1 auto;
+        min-height: 0;
+        display: flex;
+        flex-direction: column;
+        overflow-x: hidden;
+        overflow-y: auto;
+        padding-right: 4px;
+        scrollbar-gutter: stable;
+      }
+
+      .form-content .games-group {
+        flex: 1 1 auto;
+        min-height: 120px;
+        margin-bottom: 0;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .form-content .games-group textarea {
+        flex: 1 1 auto;
+        min-height: 120px;
+        height: auto;
+        max-height: none;
       }
 
       .header {
@@ -74,6 +100,34 @@
 
       .header-link:active {
         transform: translateY(0);
+      }
+
+      .close-button {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 4px;
+        padding: 6px 10px;
+        border: 1px solid #cbd5e0;
+        border-radius: 6px;
+        background: #f7fafc;
+        color: #4a5568;
+        font-family: inherit;
+        font-size: 12px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.2s;
+      }
+
+      .close-button:hover {
+        background: #edf2f7;
+        border-color: #a0aec0;
+        color: #2d3748;
+      }
+
+      .close-button:focus-visible {
+        outline: 2px solid #667eea;
+        outline-offset: 2px;
       }
 
       .header .subtitle {
@@ -194,7 +248,9 @@
       }
 
       .button-container {
-        margin-top: 10px;
+        margin-top: 8px;
+        padding-top: 8px;
+        border-top: 1px solid #e2e8f0;
         text-align: center;
         flex-shrink: 0;
       }
@@ -275,6 +331,102 @@
         body {
           padding: 10px;
         }
+
+        .container {
+          padding: 12px;
+        }
+
+        .form-row {
+          gap: 10px;
+        }
+      }
+
+      /* Compacta o popup quando o navegador disponibiliza pouca altura. */
+      @media (max-height: 650px) {
+        body {
+          padding: 8px;
+        }
+
+        .container {
+          padding: 10px 12px;
+          border-radius: 10px;
+        }
+
+        .header {
+          margin-bottom: 6px;
+          padding-bottom: 6px;
+        }
+
+        .header h2 {
+          margin-bottom: 2px;
+          font-size: 21px;
+        }
+
+        .header .subtitle {
+          font-size: 11px;
+          margin-top: 2px;
+        }
+
+        .info-text,
+        .form-group,
+        .form-row {
+          margin-bottom: 7px;
+        }
+
+        .form-group label {
+          margin-bottom: 4px;
+        }
+
+        .form-group select,
+        .form-group textarea {
+          padding-top: 8px;
+          padding-bottom: 8px;
+        }
+
+        textarea {
+          height: 120px;
+          max-height: 120px;
+        }
+
+        .button-container {
+          margin-top: 6px;
+          padding-top: 6px;
+        }
+
+        #mybutton {
+          padding: 11px 24px;
+          font-size: 14px;
+        }
+      }
+
+      @media (max-height: 480px) {
+        .header .subtitle,
+        .help-text {
+          display: none;
+        }
+
+        .header h2 {
+          font-size: 18px;
+        }
+
+        .header-link {
+          padding: 5px 8px;
+          font-size: 11px;
+        }
+
+        .close-button {
+          padding: 5px 7px;
+          font-size: 11px;
+        }
+
+        .info-text {
+          padding: 6px;
+        }
+
+        textarea {
+          height: 90px;
+          max-height: 90px;
+        }
       }
     </style>
   </head>
@@ -287,10 +439,14 @@
           <a href="https://loteriasonline.caixa.gov.br" target="_blank" class="header-link" title="Abrir site das Loterias Caixa">
             🌐 Abrir Loterias Caixa
           </a>
+          <button type="button" id="closeButton" class="close-button" title="Fechar (Esc)">
+            ✕ Fechar
+          </button>
         </h2>
         <div class="subtitle">Preenchimento automático de jogos das Loterias Caixa</div>
       </div>
 
+      <div class="form-content">
       <!-- Info -->
       <div class="info-text">
         ⚠️ Extensão não desenvolvida pela Caixa Econômica Federal
@@ -365,12 +521,13 @@
       </div>
 
       <!-- Textarea -->
-      <div class="form-group">
+      <div class="form-group games-group">
         <label for="listadejogos">Seus Jogos (um por linha)</label>
         <textarea
           id="listadejogos"
           placeholder="Cole aqui os jogos no formato correto, um por linha.&#10;&#10;Exemplo Mega Sena:&#10;01 02 03 04 05 06&#10;07 08 09 10 11 12&#10;13 14 15 16 17 18"
         ></textarea>
+      </div>
       </div>
 
       <!-- Botão -->

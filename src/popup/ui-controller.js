@@ -11,6 +11,7 @@ class UIController {
       progressBar: document.getElementById('progressBar'),
       progressContainer: document.getElementById('progressContainer'),
       button: document.getElementById('mybutton'),
+      closeButton: document.getElementById('closeButton'),
       modalidade: document.getElementById('modalidade'),
       quantidade: document.getElementById('quantidade'),
       qtdTeimosinha: document.getElementById('qtdTeimosinha'),
@@ -68,6 +69,23 @@ class UIController {
       teimosinha: parseInt(this.elements.qtdTeimosinha.value, 10),
       espelho: this.elements.espelho.checked
     };
+  }
+
+  /**
+   * Restaura os dados previamente salvos no formulário.
+   * @param {Object} data - Dados persistidos do formulário
+   */
+  setFormData(data) {
+    if (!data || typeof data !== 'object') return;
+
+    this.elements.modalidade.value = data.modalidade || '';
+    this.elements.listadejogos.value = typeof data.jogos === 'string' ? data.jogos : '';
+    this.elements.quantidade.value = String(data.extraNumbers ?? 0);
+    this.elements.qtdTeimosinha.value = String(data.teimosinha ?? 0);
+
+    this.updateEspelhoVisibility(this.elements.modalidade.value);
+    this.elements.espelho.checked =
+      this.elements.modalidade.value === 'Lotomania' && Boolean(data.espelho);
   }
 
   /**
